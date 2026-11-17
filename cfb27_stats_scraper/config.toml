@@ -1,0 +1,80 @@
+# College Football 27 dynasty stats scraper - settings
+# Everything the script looks for on screen is plain text below, so if the game words
+# something differently, change the text here (no code changes needed).
+
+[game]
+launch = "steam"                    # steam | exe | uri | none
+steam_app_id = 4032350              # EA SPORTS College Football 27 on Steam
+exe_path = ""                       # for EA app / Epic installs: full path to the game .exe (launch = "exe")
+launch_uri = ""                     # e.g. an EA app / Epic launch link (launch = "uri")
+window_title = "College Football 27"
+launch_timeout_sec = 420
+startup_wait_sec = 20
+close_game_when_done = false
+
+[dynasty]
+name = "My Dynasty"                 # the dynasty's name exactly as shown in Load/Start Dynasty
+
+[menus]
+main_menu_item = "Dynasty"
+main_menu_markers = ["Dynasty", "Road to Glory", "Play Now", "Ultimate Team", "Team Builder"]
+load_item = "Load/Start Dynasty"
+hub_markers = ["Stats & Records", "Recruiting", "Roster", "Dynasty Hub", "Coach"]
+hub_markers_needed = 2
+stats_tab_markers = ["Team Stats", "Season Stats"]   # text that proves you're on Stats & Records
+team_stats_item = "Team Stats"
+season_stats_item = "Season Stats"
+tab_next = "RB"
+max_tab_presses = 10
+menu_wait = 0.6
+
+[team_stats]
+views = ["Offense", "Defense", "Conversions", "Penalties", "NIL"]
+next_view = ["RT"]                  # buttons that move the top-right selector to the next view
+label_region = [0.45, 0.0, 1.0, 0.3]  # where that selector is (fractions of the screen: x0, y0, x1, y1)
+enter_table = []                    # buttons to press if the cursor must be moved into the table first
+
+[season_stats]
+next_team = "LT"
+next_category = "RT"
+num_teams = 0                       # 0 = however many teams Team Stats found (+ a few spare; stops when it wraps)
+max_categories = 15
+category_names = ["Passing", "Rushing", "Receiving", "Blocking", "Defense", "Kicking", "Punting",
+                  "Kick Returns", "Punt Returns", "Returns", "Scrimmage", "Scoring", "Total"]
+
+[table]
+v_next = "DOWN"                     # buttons that move through a table (use e.g. "LS_DOWN" for the stick)
+v_prev = "UP"
+h_next = "RIGHT"
+h_prev = "LEFT"
+page_overlap = 1                    # rows/columns kept between pages (helps stitching)
+tap_hold = 0.035                    # seconds each tap is held during a page jump
+tap_gap = 0.035                     # seconds between taps during a page jump
+min_wait = 0.08
+change_timeout = 0.8
+settle_timeout = 1.5
+change_thresh = 0.0008              # share of pixels that must change to count as "the screen reacted"
+stable_thresh = 0.0004              # raise both if an animated background makes it think the screen never settles
+scroll_resets_on_switch = true      # table jumps back to the top-left when the team/category changes
+max_pages = 40
+# rows_per_page = { team = 15, season = 12 }   # optional; learned automatically otherwise
+
+[routes]
+# Optional fixed button routes, used INSTEAD of reading the menus, e.g.
+# to_dynasty_hub = ["A", "WAIT5", "DOWN", "DOWN", "A", "A", "WAIT2", "DOWN", "A", "WAIT20", "A"]
+# hub_to_stats_tab = ["RB", "RB", "RB"]
+# stats_tab_to_team_stats = ["A"]
+# stats_tab_to_season_stats = ["RIGHT", "A"]
+
+[capture]
+backend = "dxcam"                   # dxcam (fast) | mss
+jpeg_quality = 92
+
+[ocr]
+workers = 0                         # 0 = (CPU cores - 2) / 2
+threads_per_worker = 2
+
+[output]
+dir = "output"
+excel = true
+debug = false                       # true = also save a screenshot of every menu step
